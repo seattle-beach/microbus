@@ -1,7 +1,6 @@
 <script type="text/template" id="template_HomeController">
   <div class="home">
     <div class="tabs">
-      <a class="log-in" href="#">Log in</a>
       <a class="nearby-stops" href="#">Nearby stops</a>
     </div>
     <div class="child"></div>
@@ -10,28 +9,6 @@
 <script type="text/template" id="template_NearbyStopsController">
   <div class="error hidden"></div>
   <div class="map-container">Loading...</div>
-</script>
-<script type="text/template" id="template_NotLoggedInController">
-  <div class="child-container"></div>
-  <a class="create-link" href="#">Create Account</a>
-</script>
-
-<script type="text/template" id="template_CreateAccountController">
-  <form>
-    <fieldset>
-      <legend>Add User</legend>
-      <div class="error hidden"></div>
-      Username: <input type="text" name="username" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      <button class="add">Add</button>
-      <button class="cancel">Cancel</button>
-    </fieldset>
-  </form>
-</script>
-
-<script type="text/template" id="template_LoginController">
-  <div class="error hidden">Please enter a valid username.</div>
-  Username: <input type="text" name="username" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-  <button>Go</button>
 </script>
 
 <script type="text/template" id="template_StopListController">

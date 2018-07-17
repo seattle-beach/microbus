@@ -19,32 +19,6 @@ describe("App", function () {
       expect(rootController).toEqual(jasmine.any(WB.HomeController));
       expect(rootController._root.parentNode).toBe(this.root);
     });
-
-    describe("When the user clicks Log In", function () {
-      beforeEach(function () {
-        WB.specHelper.simulateClick(this.root.querySelector(".log-in"));
-      });
-
-      it("should show the not logged in controller", function () {
-        var rootController = this.subject._rootController;
-        expect(rootController).toEqual(jasmine.any(WB.NotLoggedInController));
-        expect(rootController._root.parentNode).toBe(this.root);
-      });
-    
-      describe("When the user logs in", function () {
-        beforeEach(function () {
-          this.root.querySelector("input[type=text]").value = "theuser";
-          WB.specHelper.simulateClick(this.root.querySelector("button"));
-        });
-    
-        it("should show the stops controller", function () {
-          var stopListController = this.subject._rootController;
-          expect(stopListController instanceof WB.StopListController).toEqual(true);
-          expect(stopListController._root.parentNode).toBe(this.root);
-          expect(stopListController.username).toBe("theuser");
-        });
-      });
-    });
   });
 
   describe("When the app launches at a url that has a stopid", function () {

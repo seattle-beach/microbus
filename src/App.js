@@ -8,7 +8,6 @@
     }
   
     start() {
-      var userService = new WB.UserService(this._xhrFactory);
       var stopService = new WB.StopService(this._xhrFactory);
       var browserLocationService = new WB.BrowserLocationService();
       var stopMatch = this.navService.hash().match(/^#stop-(.*)$/);
@@ -27,17 +26,6 @@
           this.navService);
       } else {
         this._rootController = new WB.HomeController(browserLocationService, stopService, this.navService);
-        this._rootController.loginClicked.subscribe(() => {
-          var nlic = new WB.NotLoggedInController(userService);
-          this._rootController.remove();
-          this._rootController = nlic;
-          nlic.appendTo(this._root);
-          nlic.loggedIn.subscribe(username => {
-            this._rootController.remove();
-            this._rootController = new WB.StopListController(username, userService, stopService, this.navService);
-            this._rootController.appendTo(this._root);
-          });
-        });
       }
       this._rootController.appendTo(this._root);
     }

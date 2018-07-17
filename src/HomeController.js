@@ -7,7 +7,6 @@
       }
 
       super();
-      this.loginClicked = new WB.Event();
       this._browserLocationService = browserLocationService;
       this._stopService = stopService;
       this._navService = navService;
@@ -15,11 +14,6 @@
   
     createDom() {
       var dom = this.createDomFromTemplate("#template_HomeController");
-  
-      dom.querySelector(".log-in").addEventListener("click", event => {
-        event.preventDefault();
-        this.loginClicked.trigger();
-      });
   
       dom.querySelector(".nearby-stops").addEventListener("click", event => {
         event.preventDefault();
