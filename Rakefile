@@ -7,7 +7,7 @@ require 'tempfile'
 load 'jasmine/tasks/jasmine.rake'
 ENV['JASMINE_CONFIG_PATH'] = 'tests/jasmine.yml'
 
-TARGET_DIRECTORY = 'target'
+TARGET_DIRECTORY = 'public'
 INTERMEDIATE_DIRECTORY = 'build'
 
 def concat(dest, sources)
@@ -29,9 +29,9 @@ def build_version_file
   changes = `git status --porcelain | grep -v '^$'`
 
   if changes == ""
-    File.write("target/version.txt", version)
+    File.write("#{TARGET_DIRECTORY}/version.txt", version)
   else
-    File.write("target/version.txt", "#{version}(dirty)\n")
+    File.write("#{TARGET_DIRECTORY}/version.txt", "#{version}(dirty)\n")
   end
 end
 
@@ -61,17 +61,20 @@ task :build, [:environment] => :clean do |t, args|
   js_temp = File.open("#{INTERMEDIATE_DIRECTORY}/wb-es2015.js", "w")
   concat_js(js_temp)
   js_temp.close
-  sh('node_modules/.bin/babel', js_temp.path, '--out-file', 'target/weatherbus.js', '--source-maps')
+  sh('node_modules/.bin/babel', js_temp.path, '--out-file', "#{TARGET_DIRECTORY}/weatherbus.js", '--source-maps')
 
   FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")
   build_app_html
   build_version_file
-  sh 'sass --scss src/weatherbus.scss target/weatherbus.css'
+  sh "sass --scss src/weatherbus.scss #{TARGET_DIRECTORY}/weatherbus.css"
 
   sh 'node_modules/.bin/jshint src'
   sh 'cd tests && ../node_modules/.bin/jshint --exclude lib .'
 end
 
+task :server do
+	sh 'ruby server.rb'
+end
 
 task :clean do
   if File.exist?("target")

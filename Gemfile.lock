@@ -9,15 +9,24 @@ GEM
       rake
     jasmine-core (3.1.0)
     method_source (0.8.2)
+    mustermann (1.0.2)
     phantomjs (2.1.1.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (2.0.5)
+    rack-protection (2.0.3)
+      rack
     rake (12.3.1)
     sass (3.4.21)
+    sinatra (2.0.3)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.3)
+      tilt (~> 2.0)
     slop (3.6.0)
+    tilt (2.0.8)
 
 PLATFORMS
   ruby
@@ -26,6 +35,7 @@ DEPENDENCIES
   jasmine
   pry
   sass
+  sinatra (~> 2.0)
 
 BUNDLED WITH
    1.16.3

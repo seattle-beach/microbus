@@ -10,9 +10,8 @@ Setup Instructions
     5. You should not see any errors.
 
 2. Launch the app
-    1. `$ cd target && 'python -m SimpleHTTPServer'`
-    1. Open 'localhost:8000'
-    1. You should see a login form.
+    1. `$ rake server`
+    1. Open 'http://localhost:4567'
 
 3. Clone, set up, and launch weatherbus
     1. See <https://github.com/gbcm/weatherbus> and follow the directions there.

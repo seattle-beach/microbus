@@ -1,7 +1,0 @@
----
-applications:
-- name: weatherbus-web
-  memory: 128M
-  host: weatherbus-web-dev
-  path: target
-  buildpack: staticfile_buildpack

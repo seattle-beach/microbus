@@ -1,5 +1,5 @@
 build/
-target/
+public/
 *.sw?
 node_modules
 .sass-cache
