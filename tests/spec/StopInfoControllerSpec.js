@@ -65,13 +65,6 @@ describe("StopInfoController", function () {
       expect(loadingIndicator).toHaveClass("hidden");
     });
 
-    it("should display latitude and longitude", function () {
-      expect(this.root).toContainElement(".lat");
-      expect(this.root).toContainElement(".lng");
-      expect(this.root.querySelector(".lat").textContent).toEqual("47.654365");
-      expect(this.root.querySelector(".lng").textContent).toEqual("-122.305214");
-    });
-
     it("should display upcoming departures", function () {
       expect(this.root).toContainElement("table.departures");
       var rows = this.root.querySelectorAll("table.departures tbody tr");

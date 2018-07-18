@@ -80,8 +80,6 @@
           errorNode.classList.remove("hidden");
           errorNode.textContent = error;
         } else {
-          this._root.querySelector(".lat").textContent = value.latitude;
-          this._root.querySelector(".lng").textContent = value.longitude;
           tbody = this._departureTable.querySelector("tbody");
   
           this._departures = value.departures;

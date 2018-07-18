@@ -26,8 +26,6 @@ describe("StopService", function() {
       beforeEach(function () {
         this.xhr.response = JSON.stringify({
           data: {
-            "longitude":-122.305214,
-            "latitude":47.654365,
             "stopId":"1_75403",
             "departures": [
               {
@@ -48,8 +46,6 @@ describe("StopService", function() {
 
       it("should call the callback with the stop information", function () {
         var response = {
-          latitude: 47.654365,
-          longitude: -122.305214,
           stopId: "1_75403",
           departures: [
             {
@@ -69,8 +65,6 @@ describe("StopService", function() {
       beforeEach(function () {
         this.xhr.response = JSON.stringify({
           data: {
-            "longitude":-122.305214,
-            "latitude":47.654365,
             "stopId":"1_75403",
             "departures": [
               {
