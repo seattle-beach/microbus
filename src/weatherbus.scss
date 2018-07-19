@@ -34,7 +34,10 @@ caption {
   margin: 1em;
 }
 
-.departures { width: 100% }
+.departures {
+	width: 100%;
+	th { text-align: left; }
+}
 
 .map-container { 
   width: 100%;
