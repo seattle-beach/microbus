@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  WB.Event = class{
+  MB.Event = class{
     constructor() {
       this._subscriberList = [];
     }

@@ -7,7 +7,7 @@ describe("NearbyStopsController", function () {
     this.stopService = {
       getStopsNearLocation: jasmine.createSpy("getStopsNearLocation")
     };
-    this.subject = new WB.NearbyStopsController(this.browserLocationService, this.stopService);
+    this.subject = new MB.NearbyStopsController(this.browserLocationService, this.stopService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -23,9 +23,9 @@ describe("NearbyStopsController", function () {
     });
 
     it("should show a map centered on the user's location", function () {
-      expect(WB.latestMap).toBeTruthy();
-      expect(WB.latestMap._container).toBe(this.root.querySelector(".map-container"));
-      expect(WB.latestMap._config.center).toEqual({
+      expect(MB.latestMap).toBeTruthy();
+      expect(MB.latestMap._container).toBe(this.root.querySelector(".map-container"));
+      expect(MB.latestMap._config.center).toEqual({
         lat: 47.5959576,
         lng: -122.33709630000001
       });
@@ -35,8 +35,8 @@ describe("NearbyStopsController", function () {
       beforeEach(function () {
         this.bounds = new google.maps.LatLngBounds({lat: 47.6010176, lng: -122.34413842707518},
           {lat: 47.5908976, lng: -122.35425842707518});
-        spyOn(WB.latestMap, "getBounds").and.returnValue(this.bounds);
-        WB.latestMap._listeners.bounds_changed();
+        spyOn(MB.latestMap, "getBounds").and.returnValue(this.bounds);
+        MB.latestMap._listeners.bounds_changed();
       });
 
       it("should request stops in the region bounded by the map", function () {
@@ -57,40 +57,40 @@ describe("NearbyStopsController", function () {
         });
   
         it("should mark the stops on the map", function () {
-          expect(WB.latestMarker).toBeTruthy();
-          expect(WB.latestMarker._config.position.lat).toEqual(47.601391);
-          expect(WB.latestMarker._config.position.lng).toEqual(-122.334282);
-          expect(WB.latestMarker._config.map).toBe(WB.latestMap);
-          expect(WB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
+          expect(MB.latestMarker).toBeTruthy();
+          expect(MB.latestMarker._config.position.lat).toEqual(47.601391);
+          expect(MB.latestMarker._config.position.lng).toEqual(-122.334282);
+          expect(MB.latestMarker._config.map).toBe(MB.latestMap);
+          expect(MB.latestMarker._config.title).toEqual("1st Ave S & Yesler Way");
         });
 
         describe("When the user clicks a stop marker", function () {
           beforeEach(function () {
-            WB.latestMarker._listeners.click();
+            MB.latestMarker._listeners.click();
           });
 
           it("should show an info window containing the stop name", function () {
-            expect(WB.latestInfoWindow).toBeTruthy();
-            expect(WB.latestInfoWindow._map).toBe(this.subject._map);
-            expect(WB.latestInfoWindow._marker).toBe(WB.latestMarker);
-            expect(WB.latestInfoWindow.getContent().textContent).toMatch("1st Ave S & Yesler Way");
+            expect(MB.latestInfoWindow).toBeTruthy();
+            expect(MB.latestInfoWindow._map).toBe(this.subject._map);
+            expect(MB.latestInfoWindow._marker).toBe(MB.latestMarker);
+            expect(MB.latestInfoWindow.getContent().textContent).toMatch("1st Ave S & Yesler Way");
           });
 
           it("should not show two info windows for the same stop", function () {
-            WB.latestMarker._listeners.click();
-            var firstWindow = WB.latestInfoWindow;
-            WB.latestMarker._listeners.click();
-            expect(WB.latestInfoWindow).toBe(firstWindow);
-            WB.latestInfoWindow._listeners.closeclick();
-            WB.latestMarker._listeners.click();
-            expect(WB.latestInfoWindow).not.toBe(firstWindow);
+            MB.latestMarker._listeners.click();
+            var firstWindow = MB.latestInfoWindow;
+            MB.latestMarker._listeners.click();
+            expect(MB.latestInfoWindow).toBe(firstWindow);
+            MB.latestInfoWindow._listeners.closeclick();
+            MB.latestMarker._listeners.click();
+            expect(MB.latestInfoWindow).not.toBe(firstWindow);
           });
 
           describe("When the user clicks the stop name in the info window", function () {
             beforeEach(function () {
               this.shouldShowStopHandler = jasmine.createSpy("shouldShowStop handler");
               this.subject.shouldShowStop.subscribe(this.shouldShowStopHandler);
-              WB.specHelper.simulateClick(WB.latestInfoWindow.getContent().querySelector("a"));
+              MB.specHelper.simulateClick(MB.latestInfoWindow.getContent().querySelector("a"));
             });
 
             it("should show a StopInfoController for that stop", function () {
@@ -102,16 +102,16 @@ describe("NearbyStopsController", function () {
 
       describe("When the bounds change repeatedly", function () {
         it("should throttle the requests", function () {
-          WB.latestMap._listeners.bounds_changed();
-          WB.latestMap._listeners.bounds_changed();
+          MB.latestMap._listeners.bounds_changed();
+          MB.latestMap._listeners.bounds_changed();
           expect(this.stopService.getStopsNearLocation.calls.count()).toEqual(1);
           jasmine.clock().tick(500);
           expect(this.stopService.getStopsNearLocation.calls.count()).toEqual(2);
         });
 
         it("should create new markers for new stops", function () {
-          var existingMarker = WB.latestMarker;
-          WB.latestMap._listeners.bounds_changed();
+          var existingMarker = MB.latestMarker;
+          MB.latestMap._listeners.bounds_changed();
           jasmine.clock().tick(500);
           var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
           cb(null, [
@@ -123,8 +123,8 @@ describe("NearbyStopsController", function () {
             }
           ]);
 
-          expect(WB.latestMarker).not.toBe(existingMarker);
-          expect(WB.latestMarker._config.title).toEqual("Boren Ave & Jefferson St");
+          expect(MB.latestMarker).not.toBe(existingMarker);
+          expect(MB.latestMarker._config.title).toEqual("Boren Ave & Jefferson St");
         });
 
         it("should not create new markers for existing stops", function () {
@@ -136,13 +136,13 @@ describe("NearbyStopsController", function () {
           }; 
           var cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
           cb(null, [stop]);
-          var existingMarker = WB.latestMarker;
-          WB.latestMap._listeners.bounds_changed();
+          var existingMarker = MB.latestMarker;
+          MB.latestMap._listeners.bounds_changed();
           jasmine.clock().tick(500);
           cb = this.stopService.getStopsNearLocation.calls.mostRecent().args[1];
           cb(null, [stop]);
 
-          expect(WB.latestMarker).toBe(existingMarker);
+          expect(MB.latestMarker).toBe(existingMarker);
         });
       });
     });
@@ -157,7 +157,7 @@ describe("NearbyStopsController", function () {
     it("should display an error", function () {
       var errorNode = this.root.querySelector(".error");
       expect(errorNode).not.toHaveClass("hidden");
-      expect(errorNode.textContent).toEqual("You haven't given Weatherbus permission to use your location.");
+      expect(errorNode.textContent).toEqual("You haven't given Microbus permission to use your location.");
     });
   });
 });

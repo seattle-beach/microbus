@@ -19,14 +19,14 @@
     };
   };
 
-  WB.NearbyStopsController = class extends WB.Controller {
+  MB.NearbyStopsController = class extends MB.Controller {
     constructor(browserLocationService, stopService) {
       super();
       this._browserLocationService = browserLocationService;
       this._stopService = stopService;
       this._markers = {};
       this._infoWindows = {};
-      this.shouldShowStop = new WB.Event();
+      this.shouldShowStop = new MB.Event();
     }
 
     createDom() {
@@ -41,7 +41,7 @@
 
         if (error) {
           errorNode = this._root.querySelector(".error");
-          errorNode.textContent = "You haven't given Weatherbus permission to use your location.";
+          errorNode.textContent = "You haven't given Microbus permission to use your location.";
           errorNode.classList.remove("hidden");
         } else { 
           this._showMap(position);

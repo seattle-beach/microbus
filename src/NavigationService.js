@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  WB.NavigationService = class {
+  MB.NavigationService = class {
     hash() {
       return location.hash;
     }
@@ -10,7 +10,7 @@
     }
   
     pushState(hash) {
-      history.pushState(null, "WB", hash);
+      history.pushState(null, "MB", hash);
     }
   
     navigate(url) {

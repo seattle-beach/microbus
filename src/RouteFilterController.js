@@ -1,11 +1,11 @@
 (function () {
   "use strict";
-  WB.RouteFilterController = class extends WB.Controller {
+  MB.RouteFilterController = class extends MB.Controller {
     constructor(routes, currentFilter) {
       super();
-      this._routes = WB.sortRouteNumbers(routes);
+      this._routes = MB.sortRouteNumbers(routes);
       this._currentFilter = currentFilter;
-      this.completed = new WB.Event();
+      this.completed = new MB.Event();
     }
 
     createDom() {

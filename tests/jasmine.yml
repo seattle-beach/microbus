@@ -11,7 +11,7 @@
 #   - dist/**/*.js
 #
 src_files:
-  - public/weatherbus.js
+  - public/microbus.js
 
 # stylesheets
 #

@@ -9,7 +9,7 @@ describe("RouteFilterController", function () {
   };
 
   beforeEach(function () {
-    this.subject = new WB.RouteFilterController(["855", "31"]);
+    this.subject = new MB.RouteFilterController(["855", "31"]);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -20,7 +20,7 @@ describe("RouteFilterController", function () {
 
   describe("When the RouteFilterController gets constructed with a current filter", function () {
     beforeEach(function () {
-      this.subject = new WB.RouteFilterController(["31", "855"], ["31"]);
+      this.subject = new MB.RouteFilterController(["31", "855"], ["31"]);
       this.root = document.createElement("div");
       this.subject.appendTo(this.root);
     });
@@ -37,7 +37,7 @@ describe("RouteFilterController", function () {
       this.subscriber = jasmine.createSpy("subscriber");
       this.subject.completed.subscribe(this.subscriber);
       this.root.querySelector("input[type=checkbox]").checked = false;
-      WB.specHelper.simulateClick(this.root.querySelector("button"));
+      MB.specHelper.simulateClick(this.root.querySelector("button"));
     });
 
     it("should trigger the completed event with the list of selected stops", function () {
@@ -46,7 +46,7 @@ describe("RouteFilterController", function () {
   });
 
   it("should sort routes numerically", function () {
-    this.subject = new WB.RouteFilterController(["113", "28E", "28", "D", "C"]);
+    this.subject = new MB.RouteFilterController(["113", "28E", "28", "D", "C"]);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
     var text = checkboxLabelsText(this.root).map(function (s) {

@@ -12,7 +12,7 @@ describe("StopService", function() {
       }
     };
     spyOn(this.jsonpAdapter, "get").and.callThrough();
-    this.subject = new WB.StopService(this.jsonpAdapter);
+    this.subject = new MB.StopService(this.jsonpAdapter);
   });
 
   describe("getDeparturesForStop", function() {

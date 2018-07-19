@@ -7,7 +7,7 @@ describe("HomeController", function () {
     this.navService = {
       pushState: function () {}
     };
-    this.subject = new WB.HomeController({
+    this.subject = new MB.HomeController({
       getLocation: function () {}
     }, this.stopService, this.navService);
     this.root = document.createElement("div");
@@ -16,18 +16,18 @@ describe("HomeController", function () {
 
   describe("When the user clicks 'Nearby stops'", function () {
     beforeEach(function () {
-      WB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
+      MB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
     });
 
     it("should show a NearbyStopsController", function () {
-      expect(this.subject._child instanceof WB.NearbyStopsController).toBe(true);
+      expect(this.subject._child instanceof MB.NearbyStopsController).toBe(true);
       expect(this.root.querySelector(".child").firstChild).toBe(this.subject._child._root);
     });
 
     describe("When the user clicks 'Nearby stops' again", function() {
       beforeEach(function() {
         this.firstNearbyStopsController = this.subject._child;
-        WB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
+        MB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
       });
 
       it("should not add another NearbyStopsController", function() {
@@ -41,7 +41,7 @@ describe("HomeController", function () {
       });
 
       it("should replace the NearbyStopController with a StopInfoController", function () {
-        expect(this.subject._child instanceof WB.StopInfoController).toBe(true);
+        expect(this.subject._child instanceof MB.StopInfoController).toBe(true);
         var stopInfoController = this.subject._child;
         expect(stopInfoController._stopId).toEqual("1_619");
         expect(stopInfoController._root.parentNode).toBe(this.subject._root.querySelector(".child"));
@@ -51,12 +51,12 @@ describe("HomeController", function () {
         beforeEach(function () {
           this.stopInfoController = this.subject._child;
           spyOn(this.stopInfoController, "remove").and.callThrough();
-          WB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
+          MB.specHelper.simulateClick(this.root.querySelector(".nearby-stops"));
         });
 
         it("should replace the stop controller with a NearbyStopsController", function () {
           expect(this.stopInfoController.remove).toHaveBeenCalled();
-          expect(this.subject._child instanceof WB.NearbyStopsController).toBe(true);
+          expect(this.subject._child instanceof MB.NearbyStopsController).toBe(true);
           var childNodes = this.root.querySelector(".child").childNodes;
           expect(childNodes.length).toEqual(1);
           expect(childNodes[0]).toBe(this.subject._child._root);

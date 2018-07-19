@@ -1,7 +1,7 @@
 describe("Event", function () {
   "use strict";
   beforeEach(function () {
-    this.subject = new WB.Event();
+    this.subject = new MB.Event();
   });
 
   it("should allow subscribing", function () {

@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  WB.HomeController = class extends WB.Controller {
+  MB.HomeController = class extends MB.Controller {
     constructor(browserLocationService, stopService, navService) {
       if (!navService) {
         throw "Wrong number of arguments to HomeController ctor";
@@ -17,7 +17,7 @@
   
       dom.querySelector(".nearby-stops").addEventListener("click", event => {
         event.preventDefault();
-        if (!(this._child instanceof WB.NearbyStopsController)) {
+        if (!(this._child instanceof MB.NearbyStopsController)) {
           this._showNearbyStops();
         }
       });
@@ -26,11 +26,11 @@
     }
   
     _showNearbyStops() {
-      var nearbyStopsController = new WB.NearbyStopsController(this._browserLocationService, this._stopService);
+      var nearbyStopsController = new MB.NearbyStopsController(this._browserLocationService, this._stopService);
       this._replaceChild(nearbyStopsController);
 
       nearbyStopsController.shouldShowStop.subscribe(stopId => {
-        this._replaceChild(new WB.StopInfoController(stopId, null, this._stopService, this._navService));
+        this._replaceChild(new MB.StopInfoController(stopId, null, this._stopService, this._navService));
       });
     }
     

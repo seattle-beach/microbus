@@ -17,7 +17,7 @@ def concat(dest, sources)
 end
 
 def build_app_html
-  maps_key = ENV['WB_MAPS_API_KEY']
+  maps_key = ENV['MB_MAPS_API_KEY']
   templates = File.read('src/templates.html')
   erb = ERB.new(File.read('src/index.html.erb'))
   html = erb.result(binding)
@@ -55,11 +55,11 @@ task :build => :clean do |t, args|
   js_temp = File.open("#{INTERMEDIATE_DIRECTORY}/wb-es2015.js", "w")
   concat_js(js_temp)
   js_temp.close
-  sh('node_modules/.bin/babel', js_temp.path, '--out-file', "#{TARGET_DIRECTORY}/weatherbus.js", '--source-maps')
+  sh('node_modules/.bin/babel', js_temp.path, '--out-file', "#{TARGET_DIRECTORY}/microbus.js", '--source-maps')
 
   build_app_html
   build_version_file
-  sh "sass --scss src/weatherbus.scss #{TARGET_DIRECTORY}/weatherbus.css"
+  sh "sass --scss src/microbus.scss #{TARGET_DIRECTORY}/microbus.css"
 
   sh 'node_modules/.bin/jshint src'
   sh 'cd tests && ../node_modules/.bin/jshint --exclude lib .'

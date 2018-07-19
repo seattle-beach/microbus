@@ -3,7 +3,7 @@ Setup Instructions
 1. Build the app
     1. Run `bundle install`.
     1. Install Node modules: `npm install --dedupe jshint babel babel-cli babel-preset-es2015`
-    2. Obtain a Google Maps API key and store it in an environment variable: `export WB_MAPS_API_KEY=<the key>`.
+    2. Obtain a Google Maps API key and store it in an environment variable: `export MB_MAPS_API_KEY=<the key>`.
 	 3. Run `rake` to build.
     4. You should not see any errors.
 

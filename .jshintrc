@@ -1,5 +1,5 @@
 {
-  "globals": { "WB": false, "google": false, "console": false },
+  "globals": { "MB": false, "google": false, "console": false },
   "eqeqeq": true,
   "forin": true,
   "undef": true,

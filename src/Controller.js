@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   // Base class for controllers. Should always be subclassed.
-  WB.Controller = class {
+  MB.Controller = class {
     createDom() {
       throw new Error("Must override createDom()");
     }

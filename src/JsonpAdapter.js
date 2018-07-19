@@ -9,7 +9,7 @@
     }
   }
 
-  WB.JsonpAdapter = class {
+  MB.JsonpAdapter = class {
     constructor(dom) {
       this._dom = dom;
       this._nextShimId = 0;
@@ -19,15 +19,15 @@
       const shimId = this._nextShimId++;
       const shimName = "_jsonpShim" + shimId;
 
-      WB[shimName] = function(payload) {
-        delete WB[shimName];
+      MB[shimName] = function(payload) {
+        delete MB[shimName];
         callback(null, payload);
       };
 
       const script = document.createElement("script");
-      script.src = appendParam(url, "callback=WB." + shimName);
+      script.src = appendParam(url, "callback=MB." + shimName);
       script.onerror = function() {
-        delete WB[shimName];
+        delete MB[shimName];
         callback("Failed to load " + url);
       };
 

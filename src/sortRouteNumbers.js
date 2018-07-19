@@ -30,7 +30,7 @@
     }
   };
 
-  WB.sortRouteNumbers = function (list) {
+  MB.sortRouteNumbers = function (list) {
     return list.sort(compareRouteNumbers);
   };
 }());

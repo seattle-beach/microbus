@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  WB.boot = function () {
-    new WB.App(document.body).start();
+  MB.boot = function () {
+    new MB.App(document.body).start();
   };
 }());

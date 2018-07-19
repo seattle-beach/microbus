@@ -25,7 +25,7 @@
     return Math.round(n * 10000) / 10000;
   };
 
-  WB.StopService = class {
+  MB.StopService = class {
     constructor (jsonpAdapter) {
       this.jsonpAdapter = jsonpAdapter;
     }

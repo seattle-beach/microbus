@@ -9,7 +9,7 @@ describe("StopInfoController", function () {
       navigate: jasmine.createSpy("navigate"),
       pushState: jasmine.createSpy("pushState")
     };
-    this.subject = new WB.StopInfoController("6789_0", null, this.stopService, this.navService);
+    this.subject = new MB.StopInfoController("6789_0", null, this.stopService, this.navService);
     this.root = document.createElement("div");
     this.subject.appendTo(this.root);
   });
@@ -120,7 +120,7 @@ describe("StopInfoController", function () {
       ];
       cb(null, result);
 
-      WB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
+      MB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
     });
 
     it("should show a filter controller", function () {
@@ -136,7 +136,7 @@ describe("StopInfoController", function () {
 
     describe("When the user applies the filter", function () {
       beforeEach(function () {
-        WB.specHelper.simulateClick(this.subject._filterController._root.querySelector("button"));
+        MB.specHelper.simulateClick(this.subject._filterController._root.querySelector("button"));
       });
 
       it("should navigate to a filtered stop URL", function () {
@@ -147,7 +147,7 @@ describe("StopInfoController", function () {
 
   describe("When a route filter was supplied", function () {
     beforeEach(function () {
-      this.subject = new WB.StopInfoController("6789_0", ["31"], this.stopService, this.navService);
+      this.subject = new MB.StopInfoController("6789_0", ["31"], this.stopService, this.navService);
       this.root = document.createElement("div");
       this.subject.appendTo(this.root);
     });
@@ -187,7 +187,7 @@ describe("StopInfoController", function () {
 
       describe("When the user clicks 'Filter Routes'", function () {
         beforeEach(function () {
-          WB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
+          MB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
         });
 
         it("should pass the current filter to the filter controller", function () {

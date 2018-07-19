@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  WB.specHelper = {
+  MB.specHelper = {
     simulateClick: function (element) {
       var event = document.createEvent("MouseEvent");
       event.initMouseEvent("click", true, true, window);
@@ -74,12 +74,12 @@
       }
     });
 
-    spyOn(WB.NavigationService.prototype, "hash").and.throwError(
+    spyOn(MB.NavigationService.prototype, "hash").and.throwError(
       "Caught an unmocked access to a location object's hash()");
-    spyOn(WB.NavigationService.prototype, "search").and.throwError(
+    spyOn(MB.NavigationService.prototype, "search").and.throwError(
       "Caught an unmocked access to a location object's search()");
-    spyOn(WB.NavigationService.prototype, "pushState");
-    spyOn(WB.NavigationService.prototype, "navigate").and.throwError(
+    spyOn(MB.NavigationService.prototype, "pushState");
+    spyOn(MB.NavigationService.prototype, "navigate").and.throwError(
       "Caught an unmocked access to a location object's navigate()");
 
 
@@ -94,20 +94,20 @@
     window.google = {
       maps: {
         Map: function (container, config) {
-          WB.latestMap = {
+          MB.latestMap = {
             _config: config,
             _container: container,
             getBounds: function () { return undefined; },
           };
-          addGoogleEvents(WB.latestMap);
-          return WB.latestMap;
+          addGoogleEvents(MB.latestMap);
+          return MB.latestMap;
         },
         Marker: function (config) {
-          WB.latestMarker = {
+          MB.latestMarker = {
             _config: config
           };
-          addGoogleEvents(WB.latestMarker);
-          return WB.latestMarker;
+          addGoogleEvents(MB.latestMarker);
+          return MB.latestMarker;
         },
         LatLngBounds: function (sw, ne) {
           if (typeof sw !== "function") {
@@ -132,7 +132,7 @@
           var dom = document.createElement("div");
           dom.appendChild(config.content);
 
-          WB.latestInfoWindow = {
+          MB.latestInfoWindow = {
             getContent: function () {
               return dom;
             },
@@ -141,8 +141,8 @@
               this._marker = marker;
             }
           };
-          addGoogleEvents(WB.latestInfoWindow);
-          return WB.latestInfoWindow;
+          addGoogleEvents(MB.latestInfoWindow);
+          return MB.latestInfoWindow;
         },
         ControlPosition: {
           TOP_RIGHT: "TR"

@@ -2,12 +2,12 @@ describe("App", function () {
   "use strict";
 
   beforeEach(function () {
-    spyOn(WB, 'BrowserLocationService').and.returnValue({
+    spyOn(MB, 'BrowserLocationService').and.returnValue({
       getLocation: function() {}
     });
 
     this.root = document.createElement("div");
-    this.subject = new WB.App(this.root);
+    this.subject = new MB.App(this.root);
     this.subject._jsonpAdapter = function() {
       return {
         get: function() {}
@@ -24,7 +24,7 @@ describe("App", function () {
 
     it("should show the home controller", function () {
       var rootController = this.subject._rootController;
-      expect(rootController).toEqual(jasmine.any(WB.HomeController));
+      expect(rootController).toEqual(jasmine.any(MB.HomeController));
       expect(rootController._root.parentNode).toBe(this.root);
     });
   });
@@ -36,7 +36,7 @@ describe("App", function () {
     });
 
     it("should show a stop info controller for the specified stop", function () {
-      expect(this.subject._rootController).toEqual(jasmine.any(WB.StopInfoController));
+      expect(this.subject._rootController).toEqual(jasmine.any(MB.StopInfoController));
       expect(this.subject._rootController._stopId).toEqual("1_2345");
     });
   });
@@ -48,7 +48,7 @@ describe("App", function () {
     });
 
     it("should show a stop info controller with the specified route filter", function() {
-      expect(this.subject._rootController).toEqual(jasmine.any(WB.StopInfoController));
+      expect(this.subject._rootController).toEqual(jasmine.any(MB.StopInfoController));
       expect(this.subject._rootController._stopId).toEqual("1_619");
       expect(this.subject._rootController._routeFilter).toEqual(["40", "28"]);
     });
