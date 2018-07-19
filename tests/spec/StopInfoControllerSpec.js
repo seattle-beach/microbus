@@ -45,14 +45,12 @@ describe("StopInfoController", function () {
              predictedTime: new Date(1453316965000),
              routeShortName: "31",
              scheduledTime: new Date(1453317145000),
-             temp: 36.2,
              headsign: "CENTRAL MAGNOLIA FREMONT"
            },
            {
              predictedTime: null,
              routeShortName: "855",
              scheduledTime: new Date(1516561850000),
-             temp: 14.4,
              headsign: "Lynnwood"
            }
          ]
@@ -75,10 +73,8 @@ describe("StopInfoController", function () {
       expect(cells0[0]).toEqual("31 CENTRAL MAGNOLIA FREMONT");
       // Avoid time zone conversion issues by just checking the invariant part
       expect(cells0[1]).toMatch(/:09$/);
-      expect(cells0[2]).toEqual("36.2");
       expect(cells1[0]).toEqual("855 Lynnwood");
       expect(cells1[1]).toMatch(/:10 \(scheduled\)$/);
-      expect(cells1[2]).toEqual("14.4");
     });
   });
 
@@ -115,20 +111,17 @@ describe("StopInfoController", function () {
              predictedTime: new Date(1453316965000),
              routeShortName: "31",
              scheduledTime: new Date(1453317145000),
-             temp: 36.2,
              headsign: "CENTRAL MAGNOLIA FREMONT"
            },
            {
              predictedTime: null,
              routeShortName: "855",
              scheduledTime: new Date(1516561850000),
-             temp: 14.4,
              headsign: "Lynnwood"
            },
            {
              routeShortName: "31",
              scheduledTime: new Date(1516561850020),
-             temp: 36.2,
              headsign: "CENTRAL MAGNOLIA FREMONT"
            },
          ]
@@ -179,20 +172,17 @@ describe("StopInfoController", function () {
                predictedTime: new Date(1453316965000),
                routeShortName: "31",
                scheduledTime: new Date(1453317145000),
-               temp: 36.2,
                headsign: "CENTRAL MAGNOLIA FREMONT"
              },
              {
                predictedTime: null,
                routeShortName: "855",
                scheduledTime: new Date(1516561850000),
-               temp: 14.4,
                headsign: "Lynnwood"
              },
              {
                routeShortName: "31",
                scheduledTime: new Date(1516561850020),
-               temp: 36.2,
                headsign: "CENTRAL MAGNOLIA FREMONT"
              }
            ]
