@@ -2,6 +2,10 @@ describe("App", function () {
   "use strict";
 
   beforeEach(function () {
+    spyOn(WB, 'BrowserLocationService').and.returnValue({
+      getLocation: function() {}
+    });
+
     this.root = document.createElement("div");
     this.subject = new WB.App(this.root);
     this.subject._xhrFactory = WB.specHelper.mockXhrFactory;
