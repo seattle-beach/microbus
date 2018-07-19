@@ -65,9 +65,18 @@ task :build => :clean do |t, args|
   sh 'cd tests && ../node_modules/.bin/jshint --exclude lib .'
 end
 
-task :deploy  => [:build, :unitTests] do
-	sh 'bundle package --all'
+task :cfdeploy  => [:build, :unitTests] do
 	sh 'cf push'
+end
+
+task :scpdeploy  => [:build, :unitTests] do
+	dest=ENV['MB_SCP_DEST']
+	
+	if dest.nil?
+		raise 'The MB_SCP_DEST environment variable is not set.'
+	end
+
+	sh 'cd public && scp * $MB_SCP_DEST'
 end
 
 task :clean do

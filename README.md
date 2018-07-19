@@ -19,4 +19,8 @@ Other things you can do:
 
 * Deploy to Cloud Foundry
 	1. `$ cf login`
-	2. `$ rake deploy`
+	2. `$ rake cfdeploy`
+
+* Deploy via SCP
+	1. Set the `MB_SCP_DEST` env var, e.g `export MB_SCP_DEST=user@host:path`.
+	2. $ `rake scpdeploy`
