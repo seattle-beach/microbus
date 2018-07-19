@@ -69,6 +69,11 @@ task :server do
 	sh 'ruby server.rb'
 end
 
+task :deploy  => :build do
+	sh 'bundle package --all'
+	sh 'cf push'
+end
+
 task :clean do
   if File.exist?("target")
 	  Dir.entries(TARGET_DIRECTORY).each do |f|
@@ -77,17 +82,4 @@ task :clean do
 	    end
 	  end
   end
-end
-
-task :run_integration do
-  require 'json'
-  require 'net/http'
-  require 'open-uri'
-
-  builds = JSON.load(open('https://api.travis-ci.org/repos/seattle-beach/weatherbus-integration/builds').read)
-  build_num = builds.first['id']
-
-  url = "https://api.travis-ci.org/builds/#{build_num}/restart"
-  auth = "token #{ENV['AUTH_TOKEN']}"
-  sh "curl -X POST #{url} --header \"Authorization: #{auth}\""
 end

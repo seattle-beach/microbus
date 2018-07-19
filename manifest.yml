@@ -1,0 +1,7 @@
+---
+applications:
+- name: microbus
+  memory: 128M
+  host: microbus
+  path: .
+  buildpack: ruby_buildpack

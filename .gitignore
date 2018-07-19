@@ -1,5 +1,7 @@
-build/
-public/
+/build
+/public
+/vendor
+/.bundle
 *.sw?
 node_modules
 .sass-cache

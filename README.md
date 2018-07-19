@@ -41,3 +41,7 @@ Other things you can do:
 * Run the Jasmine test in a browser
     1. Run `rake jasmine` and go to the URL mentioned in the output.
     2. Everything should be green.
+
+* Deploy to Cloud Foundry
+	1. `$ cf login`
+	2. `$ rake deploy`
