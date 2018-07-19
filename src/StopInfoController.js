@@ -70,7 +70,7 @@
     shown() {
       this._navService.pushState("#stop-" + this._stopId);
       
-      this._stopService.getInfoForStop(this._stopId, (error, value) => {
+      this._stopService.getDeparturesForStop(this._stopId, (error, departures) => {
         var errorNode, tbody;
         var loading = this._root.querySelector(".loading");
         loading.classList.add("hidden");
@@ -82,8 +82,8 @@
         } else {
           tbody = this._departureTable.querySelector("tbody");
   
-          this._departures = value.departures;
-          value.departures.forEach(d => {
+          this._departures = departures;
+          departures.forEach(d => {
             if (this._shouldShowDeparture(d)) {
               var row = tbody.insertRow(-1);
               appendCellWithText(row, d.routeShortName + " "  + d.headsign);

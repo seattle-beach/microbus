@@ -90,12 +90,6 @@
       "Caught an unmocked access to a location object's navigate()");
 
 
-
-    WB.config = {
-      serviceUrl: "http://localhost/"
-    };
-
-
     var addGoogleEvents = function (thing) {
       thing._listeners = {};
       thing.addListener = function (eventName, cb) {

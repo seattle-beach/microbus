@@ -50,8 +50,8 @@ describe("NearbyStopsController", function () {
             {
               id: "1_110", 
               name: "1st Ave S & Yesler Way",
-              latitude: 47.601391,
-              longitude: -122.334282
+              lat: 47.601391,
+              lon: -122.334282
             }
           ]);
         });

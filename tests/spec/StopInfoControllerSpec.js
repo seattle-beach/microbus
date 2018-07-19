@@ -3,7 +3,7 @@ describe("StopInfoController", function () {
 
   beforeEach(function () {
     this.stopService = {
-      getInfoForStop: jasmine.createSpy("getInfoForStop")
+      getDeparturesForStop: jasmine.createSpy("getDeparturesForStop")
     };
     this.navService = {
       navigate: jasmine.createSpy("navigate"),
@@ -25,7 +25,7 @@ describe("StopInfoController", function () {
   });
 
   it("should load information for the stop", function () {
-    expect(this.stopService.getInfoForStop).toHaveBeenCalledWith("6789_0", jasmine.any(Function));
+    expect(this.stopService.getDeparturesForStop).toHaveBeenCalledWith("6789_0", jasmine.any(Function));
   });
 
   describe("When the stop information loads", function () {
@@ -35,26 +35,22 @@ describe("StopInfoController", function () {
     };
 
     beforeEach(function () {
-      var args = this.stopService.getInfoForStop.calls.mostRecent().args;
+      var args = this.stopService.getDeparturesForStop.calls.mostRecent().args;
       var cb = args[1];
-      var result = {
-         latitude: 47.654365,
-         longitude: -122.305214,
-         departures: [
-           {
-             predictedTime: new Date(1453316965000),
-             routeShortName: "31",
-             scheduledTime: new Date(1453317145000),
-             headsign: "CENTRAL MAGNOLIA FREMONT"
-           },
-           {
-             predictedTime: null,
-             routeShortName: "855",
-             scheduledTime: new Date(1516561850000),
-             headsign: "Lynnwood"
-           }
-         ]
-      };
+      var result = [
+        {
+          predictedTime: new Date(1453316965000),
+          routeShortName: "31",
+          scheduledTime: new Date(1453317145000),
+          headsign: "CENTRAL MAGNOLIA FREMONT"
+        },
+        {
+          predictedTime: null,
+          routeShortName: "855",
+          scheduledTime: new Date(1516561850000),
+          headsign: "Lynnwood"
+        }
+      ];
       cb(null, result);
     });
 
@@ -80,7 +76,7 @@ describe("StopInfoController", function () {
 
   describe("When the stop information fails to load", function () {
     beforeEach(function () {
-      var args = this.stopService.getInfoForStop.calls.mostRecent().args;
+      var args = this.stopService.getDeparturesForStop.calls.mostRecent().args;
       var callback = args[1];
       var error = "ERROR";
       callback(error, null);
@@ -101,31 +97,27 @@ describe("StopInfoController", function () {
 
   describe("When the user clicks 'Filter Routes'", function () {
     beforeEach(function () {
-      var args = this.stopService.getInfoForStop.calls.mostRecent().args;
+      var args = this.stopService.getDeparturesForStop.calls.mostRecent().args;
       var cb = args[1];
-      var result = {
-         latitude: 47.654365,
-         longitude: -122.305214,
-         departures: [
-           {
-             predictedTime: new Date(1453316965000),
-             routeShortName: "31",
-             scheduledTime: new Date(1453317145000),
-             headsign: "CENTRAL MAGNOLIA FREMONT"
-           },
-           {
-             predictedTime: null,
-             routeShortName: "855",
-             scheduledTime: new Date(1516561850000),
-             headsign: "Lynnwood"
-           },
-           {
-             routeShortName: "31",
-             scheduledTime: new Date(1516561850020),
-             headsign: "CENTRAL MAGNOLIA FREMONT"
-           },
-         ]
-      };
+      var result = [
+        {
+          predictedTime: new Date(1453316965000),
+          routeShortName: "31",
+          scheduledTime: new Date(1453317145000),
+          headsign: "CENTRAL MAGNOLIA FREMONT"
+        },
+        {
+          predictedTime: null,
+          routeShortName: "855",
+          scheduledTime: new Date(1516561850000),
+          headsign: "Lynnwood"
+        },
+        {
+          routeShortName: "31",
+          scheduledTime: new Date(1516561850020),
+          headsign: "CENTRAL MAGNOLIA FREMONT"
+        },
+      ];
       cb(null, result);
 
       WB.specHelper.simulateClick(this.root.querySelector(".filter-link"));
@@ -162,31 +154,27 @@ describe("StopInfoController", function () {
 
     describe("When the stop information loads", function () {
       beforeEach(function () {
-        var args = this.stopService.getInfoForStop.calls.mostRecent().args;
+        var args = this.stopService.getDeparturesForStop.calls.mostRecent().args;
         var cb = args[1];
-        var result = {
-           latitude: 47.654365,
-           longitude: -122.305214,
-           departures: [
-             {
-               predictedTime: new Date(1453316965000),
-               routeShortName: "31",
-               scheduledTime: new Date(1453317145000),
-               headsign: "CENTRAL MAGNOLIA FREMONT"
-             },
-             {
-               predictedTime: null,
-               routeShortName: "855",
-               scheduledTime: new Date(1516561850000),
-               headsign: "Lynnwood"
-             },
-             {
-               routeShortName: "31",
-               scheduledTime: new Date(1516561850020),
-               headsign: "CENTRAL MAGNOLIA FREMONT"
-             }
-           ]
-        };
+        var result = [
+          {
+            predictedTime: new Date(1453316965000),
+            routeShortName: "31",
+            scheduledTime: new Date(1453317145000),
+            headsign: "CENTRAL MAGNOLIA FREMONT"
+          },
+          {
+            predictedTime: null,
+            routeShortName: "855",
+            scheduledTime: new Date(1516561850000),
+            headsign: "Lynnwood"
+          },
+          {
+            routeShortName: "31",
+            scheduledTime: new Date(1516561850020),
+            headsign: "CENTRAL MAGNOLIA FREMONT"
+          }
+        ];
         cb(null, result);
       });
 

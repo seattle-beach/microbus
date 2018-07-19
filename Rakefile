@@ -46,13 +46,7 @@ task :default => [:build, :unitTests]
 
 task :unitTests => "jasmine:ci"
 
-task :build, [:environment] => :clean do |t, args|
-  buildenv = args[:environment]
-
-  if buildenv.nil?
-    buildenv = 'acceptance'
-  end
-
+task :build => :clean do |t, args|
   mkdir_p(TARGET_DIRECTORY)
   mkdir_p(INTERMEDIATE_DIRECTORY)
 
@@ -63,7 +57,6 @@ task :build, [:environment] => :clean do |t, args|
   js_temp.close
   sh('node_modules/.bin/babel', js_temp.path, '--out-file', "#{TARGET_DIRECTORY}/weatherbus.js", '--source-maps')
 
-  FileUtils.cp("src/config-#{buildenv}.js", "#{TARGET_DIRECTORY}/config.js")
   build_app_html
   build_version_file
   sh "sass --scss src/weatherbus.scss #{TARGET_DIRECTORY}/weatherbus.css"

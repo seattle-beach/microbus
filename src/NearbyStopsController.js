@@ -74,7 +74,7 @@
 
     _makeMarker(stop) {
       var marker = this._markers[stop.id] = new google.maps.Marker({
-        position: {lat: stop.latitude, lng: stop.longitude},
+        position: {lat: stop.lat, lng: stop.lon},
         map: this._map,
         title: stop.name
       });

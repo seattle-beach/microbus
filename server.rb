@@ -26,17 +26,19 @@ get '/stops-for-location' do
   doc['data']['list'].to_json
 end
 
-get '/stop/:stopid' do
+get '/arrivals-and-departures-for-stop/:stopid' do
   url = URI::HTTP.build(
     host: 'api.pugetsound.onebusaway.org', 
-    path: "/api/where/stop/#{params['stopid']}.json",
+    path: "/api/where/arrivals-and-departures-for-stop/#{params['stopid']}.json",
     query: Rack::Utils.build_query(
       key: 'TEST',
+      minutesBefore: 5,
+      minutesAfter: 45
     )
   )
+  puts("Getting #{url}")
   response = Net::HTTP.get(url)
-  doc = JSON.parse(response)
 
   content_type :json
-  doc['data'].to_json
+  response
 end

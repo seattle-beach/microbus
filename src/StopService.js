@@ -9,17 +9,20 @@
     }
   };
 
-  var processStopInfo = function (stopInfo) {
-    stopInfo.data.departures.forEach(function (d) {
-      d.predictedTime = convertDate(d.predictedTime);
-      d.scheduledTime = convertDate(d.scheduledTime);
+  var processDepartures = function (response) {
+    return response.data.entry.arrivalsAndDepartures.map(function (d) {
+      return {
+        predictedTime: convertDate(d.predictedDepartureTime),
+        scheduledTime: convertDate(d.scheduledDepartureTime),
+        routeShortName: d.routeShortName,
+        temp: d.temp,
+        headsign: d.headsign,
+      };
     });
-
-    return stopInfo.data;
   };
 
   var processStopList = function (stopList) {
-    return stopList.data;
+    return stopList;
   };
 
   var transformError = function () {
@@ -35,16 +38,16 @@
       this.xhrFactory = xhrFactory;
     }
 
-    getInfoForStop(stopId, callback) {
-      var url = "api/v1/stops/" + stopId;
-      WB.makeRestGet(this.xhrFactory(), url, transformError, processStopInfo, callback);
+    getDeparturesForStop(stopId, callback) {
+      var url = "/arrivals-and-departures-for-stop/" + stopId;
+      WB.makeRestGet(this.xhrFactory(), url, transformError, processDepartures, callback);
     }
 
     getStopsNearLocation(position, callback) {
       var center = position.getCenter();
       var latSpan = position.getNorthEast().lat() - position.getSouthWest().lat();
       var lngSpan = position.getNorthEast().lng() - position.getSouthWest().lng();
-      var url = "api/v1/stops/?lat=" + round(center.lat()) + "&lng=" + round(center.lng()) +
+      var url = "/stops-for-location?lat=" + round(center.lat()) + "&lng=" + round(center.lng()) +
         "&latSpan=" + round(latSpan) + "&lngSpan=" + round(lngSpan);
       WB.makeRestGet(this.xhrFactory(), url, transformError, processStopList, callback);
     }

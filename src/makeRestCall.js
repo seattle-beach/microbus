@@ -5,8 +5,6 @@
   };
 
   WB.makeRestGet = function (xhr, url, transformError, jsonTransform, callback) {
-    url = WB.config.serviceUrl + url;
-
     xhr.onreadystatechange = function () {
       var response;
 
@@ -30,8 +28,6 @@
   };
 
   WB.makeRestPost = function (xhr, url, body, transformError, callback) {
-    url = WB.config.serviceUrl + url;
-
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (isSuccess(xhr)) {

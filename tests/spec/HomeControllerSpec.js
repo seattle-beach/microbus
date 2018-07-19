@@ -2,7 +2,7 @@ describe("HomeController", function () {
   "use strict";
   beforeEach(function () {
     this.stopService = {
-      getInfoForStop: function () {}
+      getDeparturesForStop: function () {}
     };
     this.navService = {
       pushState: function () {}

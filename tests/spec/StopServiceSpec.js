@@ -10,15 +10,15 @@ describe("StopService", function() {
     this.subject = new WB.StopService(xhrFactory);
   });
 
-  describe("getInfoForStop", function() {
+  describe("getDeparturesForStop", function() {
     beforeEach(function() {
       this.callback = jasmine.createSpy("callback");
-      this.subject.getInfoForStop("1_75403", this.callback);
+      this.subject.getDeparturesForStop("1_75403", this.callback);
     });
 
     it("should do an AJAX call to the stopInfo API", function() {
       expect(this.xhr).toBeTruthy();
-      expect(this.xhr.open).toHaveBeenCalledWith("get", "http://localhost/api/v1/stops/1_75403");
+      expect(this.xhr.open).toHaveBeenCalledWith("get", "/arrivals-and-departures-for-stop/1_75403");
       expect(this.xhr.send).toHaveBeenCalled();
     });
 
@@ -26,16 +26,17 @@ describe("StopService", function() {
       beforeEach(function () {
         this.xhr.response = JSON.stringify({
           data: {
-            "stopId":"1_75403",
-            "departures": [
-              {
-                "predictedTime": 1453317145000,
-                "routeShortName": "31",
-                "scheduledTime": 1453317145000,
-                "temp": 36.2,
-                "headsign": "CENTRAL MAGNOLIA FREMONT"
-              }
-            ]
+            entry: {
+              arrivalsAndDepartures: [
+                {
+                  "predictedDepartureTime": 1453317145000,
+                  "routeShortName": "31",
+                  "scheduledDepartureTime": 1453317145000,
+                  "temp": 36.2,
+                  "headsign": "CENTRAL MAGNOLIA FREMONT"
+                }
+              ]
+            }
           }
         });
         
@@ -44,19 +45,16 @@ describe("StopService", function() {
         this.xhr.onreadystatechange();
       });
 
-      it("should call the callback with the stop information", function () {
-        var response = {
-          stopId: "1_75403",
-          departures: [
-            {
-              predictedTime: new Date(1453317145000),
-              routeShortName: "31",
-              scheduledTime: new Date(1453317145000),
-              temp: 36.2,
-              headsign: "CENTRAL MAGNOLIA FREMONT"
-            }
-          ]
-        };
+      it("should call the callback with the departures", function () {
+        var response = [
+          {
+            predictedTime: new Date(1453317145000),
+            routeShortName: "31",
+            scheduledTime: new Date(1453317145000),
+            temp: 36.2,
+            headsign: "CENTRAL MAGNOLIA FREMONT"
+          }
+        ];
         expect(this.callback).toHaveBeenCalledWith(null, response);
       });
     });
@@ -65,16 +63,17 @@ describe("StopService", function() {
       beforeEach(function () {
         this.xhr.response = JSON.stringify({
           data: {
-            "stopId":"1_75403",
-            "departures": [
-              {
-                "predictedTime": 0,
-                "routeShortName": "31",
-                "scheduledTime": 1453317145000,
-                "temp": 36.2,
-                "headsign": "CENTRAL MAGNOLIA FREMONT"
-              }
-            ]
+            entry: {
+              arrivalsAndDepartures: [
+                {
+                  "predictedDepartureTime": 0,
+                  "routeShortName": "31",
+                  "scheduledDepartureTime": 1453317145000,
+                  "temp": 36.2,
+                  "headsign": "CENTRAL MAGNOLIA FREMONT"
+                }
+              ]
+            }
           }
         });
         
@@ -84,7 +83,7 @@ describe("StopService", function() {
       });
     
       it("should produce null", function () {
-        expect(this.callback.calls.mostRecent().args[1].departures[0].predictedTime).toBeNull();
+        expect(this.callback.calls.mostRecent().args[1][0].predictedTime).toBeNull();
       });
     });
 
@@ -113,22 +112,20 @@ describe("StopService", function() {
     it("should make an AJAX call with the correct center and radii", function () {
       expect(this.xhr).toBeTruthy();
       expect(this.xhr.open).toHaveBeenCalledWith("get",
-        "http://localhost/api/v1/stops/?lat=47.596&lng=-122.3492&latSpan=-0.0101&lngSpan=-0.0101");
+        "/stops-for-location?lat=47.596&lng=-122.3492&latSpan=-0.0101&lngSpan=-0.0101");
       expect(this.xhr.send).toHaveBeenCalled();
     });
 
     describe("When the AJAX call succeeds", function () {
       beforeEach(function () {
-        this.payload = {
-          data: [
-	          {
-	            id: "1_110", 
-	            name: "1st Ave S & Yesler Way",
-	            latitude: 47.601391,
-	            longitude: -122.334282
-	          }
-	        ]
-        };
+        this.payload = [
+	        {
+	          id: "1_110", 
+	          name: "1st Ave S & Yesler Way",
+	          lat: 47.601391,
+	          lon: -122.334282
+	        }
+        ];
         this.xhr.response = JSON.stringify(this.payload);
         this.xhr.readyState = 4;
         this.xhr.status = 200;
@@ -136,7 +133,7 @@ describe("StopService", function() {
       });
 
       it("should call the callback with the stops", function () {
-        expect(this.callback).toHaveBeenCalledWith(null, this.payload.data);
+        expect(this.callback).toHaveBeenCalledWith(null, this.payload);
       });
     });
   });
