@@ -33,7 +33,7 @@ describe("StopService", function() {
                   "routeShortName": "31",
                   "scheduledDepartureTime": 1453317145000,
                   "temp": 36.2,
-                  "headsign": "CENTRAL MAGNOLIA FREMONT"
+                  "tripHeadsign": "CENTRAL MAGNOLIA FREMONT"
                 }
               ]
             }
@@ -70,7 +70,7 @@ describe("StopService", function() {
                   "routeShortName": "31",
                   "scheduledDepartureTime": 1453317145000,
                   "temp": 36.2,
-                  "headsign": "CENTRAL MAGNOLIA FREMONT"
+                  "tripHeadsign": "CENTRAL MAGNOLIA FREMONT"
                 }
               ]
             }

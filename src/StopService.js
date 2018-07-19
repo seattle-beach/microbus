@@ -16,7 +16,7 @@
         scheduledTime: convertDate(d.scheduledDepartureTime),
         routeShortName: d.routeShortName,
         temp: d.temp,
-        headsign: d.headsign,
+        headsign: d.tripHeadsign,
       };
     });
   };
