@@ -18,9 +18,9 @@ describe("App", function () {
       this.subject.start();
     });
 
-    it("should show a NearbyStopsController", function () {
+    it("should show the home controller", function () {
       var rootController = this.subject._rootController;
-      expect(rootController).toEqual(jasmine.any(WB.NearbyStopsController));
+      expect(rootController).toEqual(jasmine.any(WB.HomeController));
       expect(rootController._root.parentNode).toBe(this.root);
     });
   });

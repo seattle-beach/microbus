@@ -25,7 +25,7 @@
           stopService, 
           this.navService);
       } else {
-        this._rootController = new WB.NearbyStopsController(browserLocationService, stopService);
+        this._rootController = new WB.HomeController(browserLocationService, stopService, this.navService);
       }
       this._rootController.appendTo(this._root);
     }
