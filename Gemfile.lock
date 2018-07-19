@@ -1,32 +1,29 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    coderay (1.1.0)
+    coderay (1.1.2)
+    ffi (1.9.25)
     jasmine (3.1.0)
       jasmine-core (= 3.1.0)
       phantomjs
       rack (>= 1.2.1)
       rake
     jasmine-core (3.1.0)
-    method_source (0.8.2)
-    mustermann (1.0.2)
+    method_source (0.9.0)
     phantomjs (2.1.1.0)
-    pry (0.10.3)
+    pry (0.11.3)
       coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
+      method_source (~> 0.9.0)
     rack (2.0.5)
-    rack-protection (2.0.3)
-      rack
     rake (12.3.1)
-    sass (3.4.21)
-    sinatra (2.0.3)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.3)
-      tilt (~> 2.0)
-    slop (3.6.0)
-    tilt (2.0.8)
+    rb-fsevent (0.10.3)
+    rb-inotify (0.9.10)
+      ffi (>= 0.5.0, < 2)
+    sass (3.5.7)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
 
 PLATFORMS
   ruby
@@ -35,7 +32,6 @@ DEPENDENCIES
   jasmine
   pry
   sass
-  sinatra (~> 2.0)
 
 RUBY VERSION
    ruby 2.5.1p57

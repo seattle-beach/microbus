@@ -2,29 +2,28 @@ describe("StopService", function() {
   "use strict";
 
   beforeEach(function() {
-    var that = this;
-    var xhrFactory = function() {
-      that.xhr = WB.specHelper.mockXhrFactory();
-      return that.xhr;
+    this.jsonpAdapter = {
+      get: function(url, callback) {
+        if (this.error) {
+          callback(this.error);
+        } else if (this.payload) {
+          callback(null, this.payload);
+        }
+      }
     };
-    this.subject = new WB.StopService(xhrFactory);
+    spyOn(this.jsonpAdapter, "get").and.callThrough();
+    this.subject = new WB.StopService(this.jsonpAdapter);
   });
 
   describe("getDeparturesForStop", function() {
-    beforeEach(function() {
-      this.callback = jasmine.createSpy("callback");
-      this.subject.getDeparturesForStop("1_75403", this.callback);
-    });
-
-    it("should do an AJAX call to the stopInfo API", function() {
-      expect(this.xhr).toBeTruthy();
-      expect(this.xhr.open).toHaveBeenCalledWith("get", "/arrivals-and-departures-for-stop/1_75403");
-      expect(this.xhr.send).toHaveBeenCalled();
+    it("should do a JSONP call to the stopInfo API", function() {
+      this.subject.getDeparturesForStop("1_75403", function() {});
+      expect(this.jsonpAdapter.get).toHaveBeenCalledWith("https://api.pugetsound.onebusaway.org/api/where/arrivals-and-departures-for-stop/1_75403.json?key=TEST", jasmine.any(Function));
     });
 
     describe("When the AJAX call succeeds", function () {
-      beforeEach(function () {
-        this.xhr.response = JSON.stringify({
+      it("should call the callback with the departures", function () {
+        this.jsonpAdapter.payload = {
           data: {
             entry: {
               arrivalsAndDepartures: [
@@ -38,15 +37,11 @@ describe("StopService", function() {
               ]
             }
           }
-        });
-        
-        this.xhr.readyState = 4;
-        this.xhr.status = 200;
-        this.xhr.onreadystatechange();
-      });
+        };
+        var callback = jasmine.createSpy("callback");
+        this.subject.getDeparturesForStop("1_75403", callback);
 
-      it("should call the callback with the departures", function () {
-        var response = [
+        expect(callback).toHaveBeenCalledWith(null, [
           {
             predictedTime: new Date(1453317145000),
             routeShortName: "31",
@@ -54,14 +49,13 @@ describe("StopService", function() {
             temp: 36.2,
             headsign: "CENTRAL MAGNOLIA FREMONT"
           }
-        ];
-        expect(this.callback).toHaveBeenCalledWith(null, response);
+        ]);
       });
     });
 
     describe("When a timestamp is 0", function () {
-      beforeEach(function () {
-        this.xhr.response = JSON.stringify({
+      it("should produce null", function () {
+        this.jsonpAdapter.payload = {
           data: {
             entry: {
               arrivalsAndDepartures: [
@@ -75,28 +69,21 @@ describe("StopService", function() {
               ]
             }
           }
-        });
-        
-        this.xhr.readyState = 4;
-        this.xhr.status = 200;
-        this.xhr.onreadystatechange();
-      });
+        };
+        var callback = jasmine.createSpy("callback");
+        this.subject.getDeparturesForStop("1_75403", callback);
     
-      it("should produce null", function () {
-        expect(this.callback.calls.mostRecent().args[1][0].predictedTime).toBeNull();
+        expect(callback.calls.mostRecent().args[1][0].predictedTime).toBeNull();
       });
     });
 
     describe("When the AJAX call does not succeed", function () {
-      beforeEach( function () {
-        this.xhr.readyState = 4;
-        this.xhr.status = 400;
-        this.xhr.onreadystatechange();
-      });
-
       it("should call the callback with an error message", function () {
-        var errorMsg = "There was an error getting stop info.";
-        expect(this.callback).toHaveBeenCalledWith(errorMsg, null);
+        this.jsonpAdapter.error = "nope";
+        var callback = jasmine.createSpy("callback");
+        this.subject.getDeparturesForStop("1_75403", callback);
+        expect(callback).toHaveBeenCalledWith(
+          "There was an error getting stop info.", null);
       });
     });
   });
@@ -105,20 +92,19 @@ describe("StopService", function() {
     beforeEach(function () {
       this.bounds = new google.maps.LatLngBounds({lat: 47.6010176, lng: -122.34413842707518},
         {lat: 47.5908976, lng: -122.35425842707518});
-      this.callback = jasmine.createSpy("callback");
-      this.subject.getStopsNearLocation(this.bounds, this.callback);
     });
 
     it("should make an AJAX call with the correct center and radii", function () {
-      expect(this.xhr).toBeTruthy();
-      expect(this.xhr.open).toHaveBeenCalledWith("get",
-        "/stops-for-location?lat=47.596&lng=-122.3492&latSpan=-0.0101&lngSpan=-0.0101");
-      expect(this.xhr.send).toHaveBeenCalled();
+      this.subject.getStopsNearLocation(this.bounds, function() {});
+      expect(this.jsonpAdapter.get).toHaveBeenCalledWith(
+        "https://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?lat=47.596&lon=-122.3492&latSpan=-0.0101&lonSpan=-0.0101&key=TEST",
+        jasmine.any(Function)
+      );
     });
 
     describe("When the AJAX call succeeds", function () {
-      beforeEach(function () {
-        this.payload = {
+      it("should call the callback with the stops", function () {
+        var payload = {
           data: {
             list: [
     	        {
@@ -130,14 +116,10 @@ describe("StopService", function() {
             ]
           }
         };
-        this.xhr.response = JSON.stringify(this.payload);
-        this.xhr.readyState = 4;
-        this.xhr.status = 200;
-        this.xhr.onreadystatechange();
-      });
-
-      it("should call the callback with the stops", function () {
-        expect(this.callback).toHaveBeenCalledWith(null, this.payload.data.list);
+        this.jsonpAdapter.payload = payload;
+        var callback = jasmine.createSpy("callback");
+        this.subject.getStopsNearLocation(this.bounds, callback);
+        expect(callback).toHaveBeenCalledWith(null, payload.data.list);
       });
     });
   });

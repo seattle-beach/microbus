@@ -8,7 +8,11 @@ describe("App", function () {
 
     this.root = document.createElement("div");
     this.subject = new WB.App(this.root);
-    this.subject._xhrFactory = WB.specHelper.mockXhrFactory;
+    this.subject._jsonpAdapter = function() {
+      return {
+        get: function() {}
+      };
+    };
     this.subject.navService.hash.and.stub().and.returnValue("");
     this.subject.navService.search.and.stub().and.returnValue("");
   });

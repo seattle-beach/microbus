@@ -65,11 +65,7 @@ task :build => :clean do |t, args|
   sh 'cd tests && ../node_modules/.bin/jshint --exclude lib .'
 end
 
-task :server do
-	sh 'ruby server.rb'
-end
-
-task :deploy  => :build do
+task :deploy  => [:build, :unitTests] do
 	sh 'bundle package --all'
 	sh 'cf push'
 end

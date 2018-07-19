@@ -3,5 +3,3 @@ ruby '~> 2.5.1'
 gem 'pry'
 gem 'jasmine'
 gem 'sass'
-
-gem "sinatra", "~> 2.0"

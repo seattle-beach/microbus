@@ -8,7 +8,7 @@
     }
   
     start() {
-      var stopService = new WB.StopService(this._xhrFactory);
+      var stopService = new WB.StopService(this._jsonpAdapter());
       var browserLocationService = new WB.BrowserLocationService();
       var stopMatch = this.navService.hash().match(/^#stop-(.*)$/);
       var stopWithRoutesMatch = this.navService.search()
@@ -30,8 +30,8 @@
       this._rootController.appendTo(this._root);
     }
   
-    _xhrFactory() {
-      return new XMLHttpRequest();
+    _jsonpAdapter() {
+      return new WB.JsonpAdapter(document.body);
     }
   };
 }());

@@ -7,13 +7,6 @@
       var event = document.createEvent("MouseEvent");
       event.initMouseEvent("click", true, true, window);
       element.dispatchEvent(event);
-    },
-    mockXhrFactory: function () {
-      return {
-        open: jasmine.createSpy("open"),
-        send: jasmine.createSpy("send"),
-        setRequestHeader: jasmine.createSpy("setRequestHeader")
-      };
     }
   };
 
