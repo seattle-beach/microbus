@@ -21,10 +21,9 @@ class Server < Sinatra::Base
       )
     )
     response = Net::HTTP.get(url)
-    doc = JSON.parse(response)
   
     content_type :json
-    doc['data']['list'].to_json
+	 response
   end
   
   get '/arrivals-and-departures-for-stop/:stopid' do

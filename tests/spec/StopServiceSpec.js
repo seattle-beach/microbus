@@ -118,14 +118,18 @@ describe("StopService", function() {
 
     describe("When the AJAX call succeeds", function () {
       beforeEach(function () {
-        this.payload = [
-	        {
-	          id: "1_110", 
-	          name: "1st Ave S & Yesler Way",
-	          lat: 47.601391,
-	          lon: -122.334282
-	        }
-        ];
+        this.payload = {
+          data: {
+            list: [
+    	        {
+    	          id: "1_110", 
+    	          name: "1st Ave S & Yesler Way",
+    	          lat: 47.601391,
+    	          lon: -122.334282
+    	        }
+            ]
+          }
+        };
         this.xhr.response = JSON.stringify(this.payload);
         this.xhr.readyState = 4;
         this.xhr.status = 200;
@@ -133,7 +137,7 @@ describe("StopService", function() {
       });
 
       it("should call the callback with the stops", function () {
-        expect(this.callback).toHaveBeenCalledWith(null, this.payload);
+        expect(this.callback).toHaveBeenCalledWith(null, this.payload.data.list);
       });
     });
   });

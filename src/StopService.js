@@ -21,8 +21,8 @@
     });
   };
 
-  var processStopList = function (stopList) {
-    return stopList;
+  var processStopList = function (response) {
+    return response.data.list;
   };
 
   var transformError = function () {
