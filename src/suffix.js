@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  MB.boot = function () {
-    new MB.App(document.body).start();
+  MB.boot = function (obaApiKey) {
+    new MB.App(document.body, obaApiKey).start();
   };
 }());

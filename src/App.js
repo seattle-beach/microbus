@@ -2,13 +2,14 @@
   "use strict";
 
   MB.App = class {
-    constructor(root) {
+    constructor(root, obaKey) {
       this._root = root;
+      this._obaKey = obaKey;
       this.navService = new MB.NavigationService();
     }
   
     start() {
-      var stopService = new MB.StopService(this._jsonpAdapter());
+      var stopService = new MB.StopService(this._jsonpAdapter(), this._obaKey);
       var browserLocationService = new MB.BrowserLocationService();
       var stopMatch = this.navService.hash().match(/^#stop-(.*)$/);
       var stopWithRoutesMatch = this.navService.search()

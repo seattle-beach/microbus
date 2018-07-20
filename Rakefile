@@ -18,6 +18,7 @@ end
 
 def build_app_html
   maps_key = ENV['MB_MAPS_API_KEY']
+  oba_key = ENV['MB_OBA_API_KEY'] || 'TEST'
   templates = File.read('src/templates.html')
   erb = ERB.new(File.read('src/index.html.erb'))
   html = erb.result(binding)

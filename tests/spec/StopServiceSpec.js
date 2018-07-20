@@ -12,13 +12,13 @@ describe("StopService", function() {
       }
     };
     spyOn(this.jsonpAdapter, "get").and.callThrough();
-    this.subject = new MB.StopService(this.jsonpAdapter);
+    this.subject = new MB.StopService(this.jsonpAdapter, 'theKey');
   });
 
   describe("getDeparturesForStop", function() {
     it("should do a JSONP call to the stopInfo API", function() {
       this.subject.getDeparturesForStop("1_75403", function() {});
-      expect(this.jsonpAdapter.get).toHaveBeenCalledWith("https://api.pugetsound.onebusaway.org/api/where/arrivals-and-departures-for-stop/1_75403.json?key=TEST", jasmine.any(Function));
+      expect(this.jsonpAdapter.get).toHaveBeenCalledWith("https://api.pugetsound.onebusaway.org/api/where/arrivals-and-departures-for-stop/1_75403.json?key=theKey", jasmine.any(Function));
     });
 
     describe("When the AJAX call succeeds", function () {
@@ -97,7 +97,7 @@ describe("StopService", function() {
     it("should make an AJAX call with the correct center and radii", function () {
       this.subject.getStopsNearLocation(this.bounds, function() {});
       expect(this.jsonpAdapter.get).toHaveBeenCalledWith(
-        "https://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?lat=47.596&lon=-122.3492&latSpan=-0.0101&lonSpan=-0.0101&key=TEST",
+        "https://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?lat=47.596&lon=-122.3492&latSpan=-0.0101&lonSpan=-0.0101&key=theKey",
         jasmine.any(Function)
       );
     });
