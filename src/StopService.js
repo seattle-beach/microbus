@@ -27,12 +27,12 @@
 
   MB.StopService = class {
     constructor (jsonpAdapter) {
-      this.jsonpAdapter = jsonpAdapter;
+      this._jsonpAdapter = jsonpAdapter;
     }
 
     getDeparturesForStop(stopId, callback) {
       var url = `https://api.pugetsound.onebusaway.org/api/where/arrivals-and-departures-for-stop/${stopId}.json?key=TEST`;
-      this.jsonpAdapter.get(url, function (error, data) {
+      this._jsonpAdapter.get(url, function (error, data) {
         if (error) {
           callback("There was an error getting stop info.", null);
         } else {
@@ -47,7 +47,7 @@
       var lonSpan = position.getNorthEast().lng() - position.getSouthWest().lng();
       var url = "https://api.pugetsound.onebusaway.org/api/where/stops-for-location.json?lat=" + round(center.lat()) + "&lon=" + round(center.lng()) +
         "&latSpan=" + round(latSpan) + "&lonSpan=" + round(lonSpan) + "&key=TEST";
-      this.jsonpAdapter.get(url, function(error, payload) {
+      this._jsonpAdapter.get(url, function(error, payload) {
         if (error) {
           callback("There was an error getting stops.", null);
         } else {
